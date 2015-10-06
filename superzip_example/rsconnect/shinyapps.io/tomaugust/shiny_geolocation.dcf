@@ -1,0 +1,8 @@
+name: shiny_geolocation
+account: tomaugust
+server: shinyapps.io
+bundleId: 282157
+url: https://tomaugust.shinyapps.io/shiny_geolocation
+when: 1444163566.6758
+asMultiple: FALSE
+asStatic: FALSE
