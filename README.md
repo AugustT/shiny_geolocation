@@ -2,11 +2,11 @@
 
 In a shiny app it might be advantageous to have access to the location of the user, for example to set the initial view of a map to their location, or to serve up information from their local area.
 
-[Click here for a demonstration using the SuperZip example](www.google.com)
+[Click here for a demonstration using the SuperZip example](https://tomaugust.shinyapps.io/shiny_geolocation)
 
 ## Javascript
 
-First we use the `tags$script()` function in shiny to add a bit of Javascript to our shiny app. This script goes in the `ui.R` script, and should be placed inside a panel that is displayed when the user first visits your app. This ensures the script is run when the app starts. Using this script we assign three things to input variables. 
+First we use the `tags$script()` function in shiny to add a bit of JavaScript to our shiny app. This script goes in the `ui.R` script, and should be placed inside a panel that is displayed when the user first visits your app. This ensures the script is run when the app starts. Using this script we assign three things to input variables. 
 
 1. `input$lat` - Latitude (numeric)
 2. `input$long` - Longitude (numeric)
@@ -93,21 +93,22 @@ shinyServer(function(input, output) {
 
 ## SuperZip example
 
-In the [SuperZip example](www.google.com) (borrowed from the [Shiny gallery](http://shiny.rstudio.com/gallery/superzip-example.html)) I have implemented the geolocation feature so that when a location is given (`input$geolocation` is `TRUE`), the leaflet map is view is updated to the user's location. This is achieved by adding the Javascript to the `ui.r` script as described above and by adding this section of code to the `server.r` script:
+In the [SuperZip example](https://tomaugust.shinyapps.io/shiny_geolocation) (borrowed from the [Shiny gallery](http://shiny.rstudio.com/gallery/superzip-example.html)) I have implemented the geolocation feature so that when a location is given (`input$geolocation` is `TRUE`), the leaflet map can be updated to the user's location by clicking a button. This is achieved by adding the JavaScript to the `ui.r` script as described above in addition to a button:
+
+```r
+    actionButton("zoomButton", "Zoom to my location")
+```
+
+The button triggers the map to change it's viewpoint using an `observeEvent`
 
 ```r
   # Zoom in on user location if given
-  observe({
-    if (is.null(input$geolocation))
-      return()
-    isolate({
-      map <- leafletProxy("map")
-      map %>% clearPopups()
-      dist <- 0.5
-      lat <- input$lat
-      lng <- input$long
-      map %>% fitBounds(lng - dist, lat - dist, lng + dist, lat + dist)
-    })
+  observeEvent(input$zoomButton, {
+     map <- leafletProxy("map")
+     dist <- 0.5
+     lat <- input$lat
+     lng <- input$long
+     map %>% fitBounds(lng - dist, lat - dist, lng + dist, lat + dist)
   })
 ```
 

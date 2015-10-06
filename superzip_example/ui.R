@@ -47,15 +47,17 @@ shinyUI(navbarPage("Superzip", id="nav",
 
         h2("ZIP explorer"),
 
+        h3("Click button to zoom to your location"),
+        
+        actionButton("zoomButton", "Zoom to my location"),
+        
         selectInput("color", "Color", vars),
         selectInput("size", "Size", vars, selected = "adultpop"),
         conditionalPanel("input.color == 'superzip' || input.size == 'superzip'",
           # Only prompt for threshold when coloring or sizing by superzip
           numericInput("threshold", "SuperZIP threshold (top n percentile)", 5)
-        ),
+        )
 
-        plotOutput("histCentile", height = 200),
-        plotOutput("scatterCollegeIncome", height = 250)
       ),
 
       tags$div(id="cite",
