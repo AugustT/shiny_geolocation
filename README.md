@@ -116,3 +116,6 @@ In the [SuperZip example](https://tomaugust.shinyapps.io/shiny_geolocation) (bor
   })
 ```
 
+### Acknowledgements
+
+Many thanks to @kazlauskis for writing the Javascript and help with debugging
