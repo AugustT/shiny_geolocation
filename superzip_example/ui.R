@@ -23,19 +23,23 @@ shinyUI(navbarPage("Superzip", id="nav",
       ),
 
       tags$script('
-       navigator.geolocation.getCurrentPosition(onSuccess, onError);
+        $(document).ready(function () {
+          navigator.geolocation.getCurrentPosition(onSuccess, onError);
       
-       function onError (err) {
-         Shiny.onInputChange("geolocation", false);
-       }
-      
-       function onSuccess (position) {
-         var coords = position.coords;
-         console.log(coords.latitude + ", " + coords.longitude);
-         Shiny.onInputChange("geolocation", true);
-         Shiny.onInputChange("lat", coords.latitude);
-         Shiny.onInputChange("long", coords.longitude);
+          function onError (err) {
+          Shiny.onInputChange("geolocation", false);
+          }
+          
+         function onSuccess (position) {
+            setTimeout(function () {
+                var coords = position.coords;
+                console.log(coords.latitude + ", " + coords.longitude);
+                Shiny.onInputChange("geolocation", true);
+                Shiny.onInputChange("lat", coords.latitude);
+                Shiny.onInputChange("long", coords.longitude);
+            }, 1100)
         }
+        });
       '),
       
       leafletOutput("map", width="100%", height="100%"),
@@ -47,10 +51,6 @@ shinyUI(navbarPage("Superzip", id="nav",
 
         h2("ZIP explorer"),
 
-        h3("Click button to zoom to your location"),
-        
-        actionButton("zoomButton", "Zoom to my location"),
-        
         selectInput("color", "Color", vars),
         selectInput("size", "Size", vars, selected = "adultpop"),
         conditionalPanel("input.color == 'superzip' || input.size == 'superzip'",

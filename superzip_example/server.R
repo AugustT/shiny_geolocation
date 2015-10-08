@@ -27,12 +27,14 @@ shinyServer(function(input, output, session) {
   })
   
   # Zoom in on user location if given
-  observeEvent(input$zoomButton, {
+  observe({
+    if(!is.null(input$lat)){
      map <- leafletProxy("map")
      dist <- 0.5
      lat <- input$lat
      lng <- input$long
      map %>% fitBounds(lng - dist, lat - dist, lng + dist, lat + dist)
+    }
   })
        
   # A reactive expression that returns the set of zips that are
