@@ -1,4 +1,4 @@
-# Using smartphone GPS and IP address location in a shing app
+# Using smartphone GPS and IP address location in a Shiny app
 
 In a shiny app it might be advantageous to have access to the location of the user, for example to set the initial view of a map to their location, or to serve up information from their local area.
 

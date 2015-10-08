@@ -23,20 +23,20 @@ shinyUI(navbarPage("Superzip", id="nav",
       ),
 
       tags$script('
-       navigator.geolocation.getCurrentPosition(onSuccess, onError);
-      
-       function onError (err) {
-         Shiny.onInputChange("geolocation", false);
-       }
-      
-       function onSuccess (position) {
-         var coords = position.coords;
-         console.log(coords.latitude + ", " + coords.longitude);
-         Shiny.onInputChange("geolocation", true);
-         Shiny.onInputChange("lat", coords.latitude);
-         Shiny.onInputChange("long", coords.longitude);
-        }
-      '),
+              navigator.geolocation.getCurrentPosition(onSuccess, onError);
+            
+            function onError (err) {
+            Shiny.onInputChange("geolocation", false);
+            }
+            
+            function onSuccess (position) {
+            var coords = position.coords;
+            console.log(coords.latitude + ", " + coords.longitude);
+            Shiny.onInputChange("geolocation", true);
+            Shiny.onInputChange("lat", coords.latitude);
+            Shiny.onInputChange("long", coords.longitude);
+            }
+            '),
       
       leafletOutput("map", width="100%", height="100%"),
 
@@ -53,6 +53,9 @@ shinyUI(navbarPage("Superzip", id="nav",
         
         selectInput("color", "Color", vars),
         selectInput("size", "Size", vars, selected = "adultpop"),
+        verbatimTextOutput("lat"),
+        verbatimTextOutput("long"),
+        verbatimTextOutput("geolocation"),
         conditionalPanel("input.color == 'superzip' || input.size == 'superzip'",
           # Only prompt for threshold when coloring or sizing by superzip
           numericInput("threshold", "SuperZIP threshold (top n percentile)", 5)

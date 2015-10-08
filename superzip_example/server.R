@@ -26,6 +26,18 @@ shinyServer(function(input, output, session) {
       setView(lng = -93.85, lat = 37.45, zoom = 4)
   })
   
+  output$lat <- renderPrint({
+    cat(paste('Latitude:', input$lat))
+  })
+  
+  output$long <- renderPrint({
+    cat(paste('Longitude:', input$long))
+  })
+  
+  output$geolocation <- renderPrint({
+    cat(paste('Geolocation:', input$geolocation))
+  })
+  
   # Zoom in on user location if given
   observeEvent(input$zoomButton, {
      map <- leafletProxy("map")
