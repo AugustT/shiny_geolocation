@@ -26,25 +26,15 @@ shinyServer(function(input, output, session) {
       setView(lng = -93.85, lat = 37.45, zoom = 4)
   })
   
-  output$lat <- renderPrint({
-    cat(paste('Latitude:', input$lat))
-  })
-  
-  output$long <- renderPrint({
-    cat(paste('Longitude:', input$long))
-  })
-  
-  output$geolocation <- renderPrint({
-    cat(paste('Geolocation:', input$geolocation))
-  })
-  
   # Zoom in on user location if given
-  observeEvent(input$zoomButton, {
+  observe({
+    if(!is.null(input$lat)){
      map <- leafletProxy("map")
      dist <- 0.5
      lat <- input$lat
      lng <- input$long
      map %>% fitBounds(lng - dist, lat - dist, lng + dist, lat + dist)
+    }
   })
        
   # A reactive expression that returns the set of zips that are
