@@ -99,6 +99,13 @@ shinyServer(function(input, output) {
 })
 ```
 
+You can run this from your R session like this
+
+```r
+library(shiny)
+runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir =          'simple_example')
+```
+
 ## SuperZip example
 
 In the [SuperZip example](https://tomaugust.shinyapps.io/shiny_geolocation) (borrowed from the [Shiny gallery](http://shiny.rstudio.com/gallery/superzip-example.html)) I have implemented the geolocation feature so that when the page loads the view will be updated to show the user's location. This is achieved by adding the JavaScript to the `ui.r` script as described above and using an `observe` statement to update the view when we have to users location.
@@ -116,6 +123,72 @@ In the [SuperZip example](https://tomaugust.shinyapps.io/shiny_geolocation) (bor
   })
 ```
 
+You can run this from your R session like this
+
+```r
+library(shiny)
+runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir =          'superzip_example')
+```
+
+### Adding accuracy
+
+If you want to know about the accuracy of a location you can add a bit more code to the javascript in ui.r
+
+```
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+```
+With this added we then need to return the value to the server side using another onInputChange call (placed with the others) like this:
+
+```
+Shiny.onInputChange("accuracy", coords.accuracy);
+```
+
+See the `accuracy_and_dynamic` folder for an example. You can run this from your R session like this
+
+```r
+library(shiny)
+runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir =          'accuracy_and_dynamic')
+```
+
+### Make it dynamic
+
+What if you want the values to be continually updated? Well we can do that as well. 
+
+To achieve this we write another function in javascript which will call our original function repeatedly after some delay. This bit of code goes in the ui.r script
+
+```
+var TIMEOUT = 1000; //SPECIFY
+var started = false;
+function getLocationRepeat(){
+  //first time only - no delay needed
+  if (!started) {
+    started = true;
+    getLocation(getLocationRepeat);
+    return;
+  }
+
+  setTimeout(function () {
+    getLocation(getLocationRepeat);
+  }, TIMEOUT);
+  
+};
+  
+getLocationRepeat();
+```
+
+Note that the duration of delay between polling for location is speified by the `TIMEOUT` variable, however the actual delay time will be this added to the delay already in the get location function (1.1 seconds). Also it is worth noting that the more you poll the faster your battery is going to run down on your phone.
+
+You can see an implementation of this in the `accuracy_and_dynamic` folder. You can run this from your R session like this
+
+```r
+library(shiny)
+runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir =          'accuracy_and_dynamic')
+```
+
 ### Acknowledgements
 
-Many thanks to @kazlauskis for writing the Javascript and help with debugging
+Many thanks to @kazlauskis for writing the Javascript and help with debugging and Kyle Doherty for contributing code for accuracy and inspiring @kazlauskis to figure out making it dynamic. 
