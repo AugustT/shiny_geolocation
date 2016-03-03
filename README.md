@@ -103,7 +103,7 @@ You can run this from your R session like this
 
 ```r
 library(shiny)
-runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir =          'simple_example')
+runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir = 'simple_example')
 ```
 
 ## SuperZip example
@@ -127,7 +127,7 @@ You can run this from your R session like this
 
 ```r
 library(shiny)
-runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir =          'superzip_example')
+runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir = 'superzip_example')
 ```
 
 ### Adding accuracy
@@ -151,7 +151,7 @@ See the `accuracy_and_dynamic` folder for an example. You can run this from your
 
 ```r
 library(shiny)
-runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir =          'accuracy_and_dynamic')
+runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir = 'accuracy_and_dynamic')
 ```
 
 ### Make it dynamic
@@ -186,7 +186,7 @@ You can see an implementation of this in the `accuracy_and_dynamic` folder. You 
 
 ```r
 library(shiny)
-runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir =          'accuracy_and_dynamic')
+runGitHub(repo = 'shiny_geolocation', username = 'AugustT', subdir = 'accuracy_and_dynamic')
 ```
 
 ### Acknowledgements
